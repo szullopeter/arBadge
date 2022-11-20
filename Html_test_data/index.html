@@ -1,0 +1,132 @@
+<!DOCTYPE html>   
+<html>   
+<head>  
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<title> Login Page </title>  
+<style>   
+Body {  
+  font-family: Calibri, Helvetica, sans-serif;  
+}  
+div {
+    width: 500px;
+}
+textarea {
+    width: 450px;
+    height: 200px;
+}
+button {   
+       width: 100%;  
+        color: black;   
+        padding: 15px;   
+        margin: 10px 0px;   
+        border: none;   
+        cursor: pointer;   
+         }   
+ form {   
+        border: 3px solid #f1f1f1; 
+        width: 500px;
+    }   
+ input[type=text], input[type=password] {   
+        width: 100%;   
+        margin: 8px 0;  
+        padding: 12px 20px;   
+        display: inline-block;   
+        box-sizing: border-box;   
+    }  
+ button:hover {   
+        opacity: 0.7;   
+    }   
+  .cancelbtn {   
+        width: auto;   
+        padding: 10px 18px;  
+        margin: 10px 5px;  
+    }   
+        
+     
+ .container {   
+        padding: 25px;   
+        background-color: lightblue;  
+    }   
+</style>   
+</head>    
+<body>    
+    <form>  
+        <div class="container"> 
+            <label>Username : </label>   
+            <input type="text" placeholder="Enter Username" name="username" id="username" >  
+            
+            <label>University : </label>   
+            <input type="text" placeholder="Enter University" name="university" id="university"> 
+
+            <label>Teachers_ID : </label>   
+            <input type="text" placeholder="Enter Teachers_ID" name="teacherID" id="teacherID">  
+
+            <label>Theme_ID : </label>   
+            <input type="text" placeholder="Enter Theme_ID" name="themeID" id="themeID">  
+
+            <label>Progress : </label>   
+            <input type="text" placeholder="Enter Progress" name="progress" id="progress">  
+
+            <label>Specialization : </label>   
+            <input type="text" placeholder="Enter Specialization" name="specialization" id="specialization">  
+
+            <label>Contact : </label>   
+            <input type="text" placeholder="Enter Contact" name="contact" id="contact">  
+
+            <button type="button" id="sendData">Send</button>   
+            
+            <script>
+                const sendData = document.querySelector('#sendData');
+                
+                const saveInfo = async() => {
+                    let response = await fetch('http://localhost:8080/student/save', {
+                        method : 'POST',
+                        headers: {
+                            'Accept' : 'application/json',
+                            'Content-Type' : 'application/json'
+                        },
+                        body: JSON.stringify({
+                            iD :  "100",
+  	                        name : document.getElementById('username').value,
+	                        university : document.getElementById('university').value,
+	                        teachers_ID : document.getElementById('teacherID').value,
+	                        theme_ID : document.getElementById('themeID').value,
+	                        progress : document.getElementById('progress').value,
+	                        specialization : document.getElementById('specialization').value,
+	                        contact : document.getElementById('contact').value
+                        })
+                    })
+                    console.log(response);
+                }
+
+                sendData.addEventListener('click', saveInfo);
+            </script>
+        
+        </div>   
+    </form> 
+    <form>
+        <div class="container">
+            <label>UserID : </label>
+            <input type="text" placeholder="Enter user id" name="userid" required>  
+
+            <button type="button" id="getUser">Get user</button>
+
+            <textarea id="userdata">ASD</textarea>
+        </div>
+
+
+        <script>
+            const getData = document.querySelector('#getUser');
+
+            const sendInfo = async() => {
+                let response = await fetch('http://localhost:8080/student/getAll');
+                console.log(response);
+            }
+
+            getData.addEventListener('click', sendInfo);
+        </script>
+
+
+    </form>
+</body>     
+</html>  
