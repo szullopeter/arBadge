@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>QRCode Scanner</title>
+    <script type="text/javascript" src="instascan.min.js"></script>
+  </head>
+  <body>
+    <video id="preview"></video>
+    
+    <script type="text/javascript">
+      let scanner = new Instascan.Scanner({
+        video: document.getElementById('preview')
+      });
+
+      scanner.addListener('scan', function (content) {
+
+        async function getStudents() {
+          const url = "http://localhost:8080/student/getStudent/" + content;
+          let response = await fetch(url);
+          response = await response.json();
+          return response;
+        }
+        getStudents().then(response => console.log(response));
+        console.log(content);
+        window.location.replace("http://127.0.0.1:5500/index.html");
+       
+      });
+
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+      });
+    </script>
+  </body>
+</html>
